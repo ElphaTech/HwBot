@@ -108,7 +108,6 @@ async def on_ready():
 
 @client.command()
 async def add(ctx, *, added):
-
     LoadJSON()
 
     added = added.split(',',2)
@@ -129,6 +128,8 @@ async def add(ctx, *, added):
         await ctx.send("**Error**: Please enter a valid **subject** with the following format. `day/month, subject, task` For more info see `!help subjects`.")
     elif not goodDate:
         await ctx.send("**Error**: Please enter a valid **date** with the following format. `*day/month*, subject, task`")
+    elif datetime(year,int(tDate[1]),int(tDate[0])) < datetime(datetime.now().year,datetime.now().month,datetime.now().day)+timedelta(days=1):
+        await ctx.send("**Error**: Please enter a valid **date** that is **after today** with the following format. `*day/month*, subject, task`")
     else:
         homework.append({})
         homework[-1]['subject'] = added[1].strip()
@@ -151,7 +152,6 @@ async def test(ctx):
     nWkDLong = nextWkDay.strftime("%d of %b").lstrip("0")
     msg = SendMessage().replace(fullRole,'<Role>')
     embed = discord.Embed(title = "Homework", description = msg)
-    embed.add_field(name='**Syntax**', value=f'There are 3 parameters:\n> **Date**: Day & Month: `{nWkDShort}`({nWkDLong})\n> **Subject**: Signified by 3/4 letters. Do `!help subjects` for list of subjects.\n> **Task**: E.g. `Scipad pg 222`')
     await ctx.send(embed = embed)
 
 #help commadnds
