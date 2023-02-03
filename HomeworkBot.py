@@ -221,4 +221,23 @@ async def test(ctx):
 async def send(ctx):
     embed = discord.Embed(title="Help: Send", description="This sends the homework message in the homework channel and pings the homework role.")  
 
+#loging messages
+@client.event
+async def on_message(message):
+    with open("log.txt","a") as f:
+        f.write(f"Message SENT at {message.created_at} from {message.guild} - {message.channel} by {message.author}: '{message.content}'\n")
+    await client.process_commands(message)
+
+@client.event
+async def on_message_delete(message):
+    with open("log.txt","a") as f:
+        f.write(f"Message DELETED at {message.created_at} from {message.guild} - {message.channel} by {message.author}: '{message.content}'\n")
+    await client.process_commands(message)
+
+@client.event
+async def on_message_edit(message,afterMessage):
+    with open("log.txt","a") as f:
+        f.write(f"Message CHANGED at {message.created_at} from {message.guild} - {message.channel} by {message.author}: '{message.content} -> {afterMessage.created_at} from {afterMessage.guild} - {afterMessage.channel} by {afterMessage.author}: '{afterMessage.content}'\n")
+    await client.process_commands(message)
+
 client.run(TOKEN)
