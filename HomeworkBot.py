@@ -1,6 +1,5 @@
 import os
 import discord
-from dotenv import load_dotenv
 import json
 from datetime import datetime
 from datetime import timedelta
@@ -75,9 +74,9 @@ def SendMessage():
     message=f'{message}\nPlease message me if I have missed something and put questions in the <#1068030623610052638>.'
     return message
 
-load_dotenv()
-TOKEN = os.getenv('DISCORD_TOKEN')
-GUILD = os.getenv('DISCORD_GUILD')
+f = open('.env')
+TOKEN = f.readline()
+GUILD = f.readline()
 
 client = commands.Bot(command_prefix='!', intents=discord.Intents.all())
 
