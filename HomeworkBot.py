@@ -70,7 +70,7 @@ def SendMessage():
         if due == nextWkDay:
             dueNextWkDay.append(f"> **{subject}** {curI['txt']}")
         elif due < tomorow:
-            homework.pop(i)
+            homework.pop(i-modifier)
             modifier+=1
         else:
             dueAfter.append(f"> `{int(curI['dueDay']):02}/{int(curI['dueMonth']):02}` **{subject}** {curI['txt']}")
